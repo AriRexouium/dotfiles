@@ -1,0 +1,23 @@
+# Source ######################################################################
+# https://github.com/Aceheliflyer/config/blob/master/Development/.gitconfig
+
+# Config ######################################################################
+[user]
+  name = Jarrett Aiken
+  email = jarrett.aiken@achl.fr
+  signingkey = A27BACF67A192EF4
+[alias]
+  authors = shortlog -sne
+[commit]
+  gpgSign = true
+[push]
+  gpgSign = false
+[tag]
+  gpgSign = true
+[status]
+  showUntrackedFiles = all
+[filter "lfs"]
+  required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
