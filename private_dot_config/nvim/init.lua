@@ -61,8 +61,8 @@ o.scrolloff = 8 -- Minimum number of lines above and below the cursor.
 map('v', 'J', ':move \'>+1<CR>gv-gv')
 map('v', 'K', ':move \'<-2<CR>gv-gv')
 
-map('n', '<Space>e', ':NvimTreeToggl')
-map('n', '<Space>t', ':ToggleTerm')
+map('n', '<Space>e', '<Cmd>NvimTreeToggle<CR>')
+map('n', '<Space>t', '<Cmd>ToggleTerm<CR>')
 map('t', '<esc>', '<c-\\><c-n>')
 
 -- Plugins -------------------------------------------------------------------------------------------------------------
