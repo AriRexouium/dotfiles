@@ -1,0 +1,33 @@
+[metadata]
+name = 'OneDark-Pro'
+origin_url = 'https://github.com/Binaryify/OneDark-Pro/blob/0bc85146e09989d4d8c61381f20342df69b3228e/themes/OneDark-Pro.json'
+
+[colors]
+background = '#282c34' # L2174
+foreground = '#abb2bf' # L2176
+cursor_border = '#ffffff' # L2090 | same as cursor_bg
+cursor_bg = '#ffffff' # L2090
+cursor_fg = '#528bff' # L2091
+# selection_bg = '#abb2bf' # L2177 | unecessary
+# selection_fg = '#000000' # undefined | unecessary
+
+ansi = [
+    '#3f4451', # L2158 | color0, black
+    '#e05561', # L2171 | color1, red
+    '#8cc265', # L2169 | color2, green
+    '#d18f52', # L2173 | color3, yellow
+    '#4aa5f0', # L2159 | color4, blue
+    '#c162de', # L2170 | color5, magenta
+    '#42b3c2', # L2168 | color6, cyan
+    '#d7dae0', # L2172 | color7, white
+]
+brights = [
+    '#4f5666', # L2160 | color8, bright black
+    '#ff616e', # L2165 | color9, bright red
+    '#a5e075', # L2163 | color10, bright green
+    '#f0a45d', # L2167 | color11, bright yellow
+    '#4dc4ff', # L2161 | color12, bright blue
+    '#de73ff', # L2164 | color13, bright magenta
+    '#4cd1e0', # L2162 | color14, bright cyan
+    '#e6e6e6', # L2166 | color15, bright white
+]
