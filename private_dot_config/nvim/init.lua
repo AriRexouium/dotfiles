@@ -100,7 +100,7 @@ return require('packer').startup(function(use)
   -- File Manager --------------------------------------------------------------
   use {
     'kyazdani42/nvim-tree.lua',
-    config = require('nvim-tree').setup(),
+    config = function() require('nvim-tree').setup() end,
     requires = 'kyazdani42/nvim-web-devicons'
   }
 
