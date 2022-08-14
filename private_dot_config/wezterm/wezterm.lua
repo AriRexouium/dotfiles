@@ -15,9 +15,9 @@ return {
   initial_cols = 120,
   initial_rows = 30,
   window_padding = {
-    left = '3px',
-    right = '3px',
-    top = '3px',
-    bottom = '3px'
+    left = 0,
+    right = 0,
+    top = 0,
+    bottom = 0
   }
 }
