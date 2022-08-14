@@ -1,0 +1,13 @@
+# Tmux Plugin Manager
+.config/tmux/plugins/tpm:
+  type: git-repo
+  url: 'https://github.com/tmux-plugins/tpm.git'
+  refreshPeriod: 168h
+# Neovim Packer
+.local/share/nvim/site/pack/packer/start/packer.nvim:
+  type: git-repo
+  url: 'https://github.com/wbthomason/packer.nvim.git'
+  refreshPeriod: 168h
+  clone:
+    args:
+      - '--depth 1'
