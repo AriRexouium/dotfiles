@@ -10,6 +10,7 @@ set -x EDITOR nvim
 set -x VISUAL nvim
 set -x PAGER most
 
+{{ if ne .chezmoi.os "android" -}}
 # Check and set-up TMUX first.
 # Split up into interactive and login I guess.
 if not set -q TMUX
@@ -20,6 +21,7 @@ if not set -q TMUX
     exec tmux new -As interactive
   end
 end
+{{- end }}
 
 # Set prompt & vim-like keybindings and clear annoying greeting.
 starship init fish | source
