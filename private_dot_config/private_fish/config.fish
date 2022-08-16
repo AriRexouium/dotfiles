@@ -4,10 +4,21 @@ set -x XDG_CACHE_HOME $HOME/.cache
 set -x XDG_DATA_HOME $HOME/.local/share
 set -x XDG_STATE_HOME $HOME/.local/state
 
+# Set Envs
+set -x BROWSER firefox
+set -x EDITOR nvim
+set -x VISUAL nvim
+set -x PAGER most
+
 # Check and set-up TMUX first.
-if status is-interactive
-and not set -q TMUX
-  exec tmux new -As root
+# Split up into interactive and login I guess.
+if not set -q TMUX
+  and status is-interactive
+  if status is-login
+    exec tmux new -As login
+  else
+    exec tmux new -As interactive
+  end
 end
 
 # Set prompt & vim-like keybindings and clear annoying greeting.
@@ -15,13 +26,13 @@ starship init fish | source
 set fish_greeting
 fish_vi_key_bindings
 
-# Set various SSH parameters.
+# Set various SSH & GPG parameters.
 if string match -e 'kitty' $TERM; alias ssh 'kitty +kitten ssh'; end
 set -x SSH_AUTH_SOCK $XDG_RUNTIME_DIR/ssh-agent.socket
 set -x GPG_TTY $(tty)
 
 # Custom aliases.
-alias cat 'bat'; alias find 'fd'; alias grep 'rg'; alias ps 'procs'
+# alias cat 'bat'; alias find 'fd'; alias grep 'rg'; alias ps 'procs'
 alias ls 'exa --classify --icons --git'
 alias li 'ls --long --header --group --modified --created --octal-permissions'
 alias tree 'ls --tree'
