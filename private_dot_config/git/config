@@ -5,7 +5,7 @@
 [user]
   name = Jarrett Aiken
   email = jarrett.aiken@achl.fr
-  signingkey = A27BACF67A192EF4
+  signingkey = ACE142C15F53182454DEE0802B45FEC5D0B181E7
 [alias]
   authors = shortlog -sne
 [commit]
