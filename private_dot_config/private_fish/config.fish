@@ -23,6 +23,10 @@ alias ls 'exa --classify --icons --git'
 alias li 'ls --long --header --group --modified --created --octal-permissions'
 alias tree 'ls --tree'
 
+alias dcu 'docker compose up -d'
+alias dcd 'docker compose down --remove-orphans'
+alias dcl 'docker compose logs -f'
+alias dcls "docker container ls --format 'table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.RunningFor}}\t{{.Status}}'"
+
 alias tb 'nc termbin.com 9999'
 alias pacman-packages 'pacman -Qq | fzf --preview \'pacman -Qil {}\' --layout=reverse --bind \'enter:execute(pacman -Qil {} | less)\''
-alias dry 'docker run --rm -tiv /var/run/docker.sock:/var/run/docker.sock -e DOCKER_HOST=$DOCKER_HOST moncho/dry'

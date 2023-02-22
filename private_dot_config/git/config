@@ -23,7 +23,7 @@
   process = git-lfs filter-process
 [core]
   # pager = diff-so-fancy | less --tabs=4 -RFX
-  pager = diff-so-fancy | most
+  # pager = diff-so-fancy | most
 [color]
   ui = true
 [color "diff-highlight"]
