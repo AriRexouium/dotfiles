@@ -1,0 +1,161 @@
+#!/usr/bin/env sh
+# -*- coding: utf-8 -*-
+# shellcheck disable=3037,3040
+
+set -euo pipefail
+
+# Version 2023/03/12 - Changelog: https://gist.github.com/Aceheliflyer/0712ffed7cb066c4ddf5c221722d9337
+# This script provides a wrapper to compress and extract files/directories using various algorithms.
+# Supported algorithms include tar, bzip2, lzma, lzip, lzop, gzip, zstd, 7z, rar, and par2.
+#
+# Usage: ./archive.sh <command> <algorithm> <filename or directory>
+# Commands: compress, extract
+# Algorithms: tar, bzip2, lzma, lzip, lzop, gzip, zstd, 7z, rar, par2
+#
+# Examples:
+#   ./archive.sh compress xz my_dir
+#   ./archive.sh extract 7z my_file.tar.7z
+#
+# Exit codes include:
+#   0 successful
+#   1 missing args
+#   2 unknown command
+#   3 unknown archive format
+#   4 file doesn't exist
+#   5 software not installed
+#
+# License:
+#   This script is licensed under the GNU General Public License v3.0 or later.
+#   For more information, see https://www.gnu.org/licenses/gpl-3.0.html
+#   (c) 2023 Jarrett Aiken <jarret.aiken@achl.fr>
+
+# Colors
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[0;33m'
+NC='\033[0m'
+
+# find echo that doesn't have -e
+# ^(?!.*echo\s+.*-e).*echo\s.*
+
+case "${#}" in
+  0) echo -e "${YELLOW}Please provide a command, algorithm, and a filename or directory.${NC}" && exit 1 ;;
+  1) echo -e "${YELLOW}Please provide an algorithm and a filename or directory.${NC}" && exit 1 ;;
+  2) echo -e "${YELLOW}Please provide a filename or directory.${NC}" && exit 1 ;;
+esac
+
+if [ "${#}" -eq 3 ] && [ ! -e "${3}" ]; then
+  echo -e "${RED}Filename or directory does not exist.${NC}" && exit 4
+fi
+
+doesCommandExist() {
+  if ! command -v "${1}" > /dev/null 2>&1; then
+    echo -e "${RED} ${1} is not installed." && exit 5
+  fi
+}
+
+if [ "${#}" -eq 3 ] ; then
+  doesCommandExist tar
+fi
+
+case "${1}" in
+  compress | create | add | new | c | a)
+    case "${2}" in
+      tar )
+        tar -cf "${3}.tar" "${3}"
+        echo -e "${GREEN}Archived with tar, created ${3}.tar.${NC}" ;;
+      bzip2 | j | bz2 | tar.bz2 | tbz2 )
+        doesCommandExist bzip2
+        tar -cjf "${3}.tar.bz2" "${3}"
+        echo -e "${GREEN}Compressed with bzip2, created ${3}.tar.bz2.${NC}" ;;
+      xz | lzma | J | tar.xz | txz )
+        doesCommandExist lzma
+        tar -cJf "${3}.tar.xz" "${3}"
+        echo -e "${GREEN}Compressed with lzma, created ${3}.tar.xz.${NC}" ;;
+      lzip | lz | tar.lz | tlz )
+        doesCommandExist lzip
+        tar -cf "${3}.tar.lz" --lzip "${3}"
+        echo -e "${GREEN}Compressed with lzip, created ${3}.tar.lz.${NC}" ;;
+      lzop | lzo | tar.lzo | tzo )
+        doesCommandExist lzop
+        tar -cf "${3}.tar.lzo" --lzop "${3}"
+        echo -e "${GREEN}Compressed with lzop, created ${3}.tar.lzo.${NC}" ;;
+      gzip | z | gz | tar.gz | tgz )
+        doesCommandExist gzip
+        tar -czf "${3}.tar.gz" "${3}"
+        echo -e "${GREEN}Compressed with gunzip, created ${3}.tar.gz.${NC}" ;;
+      compress | Z | tar.Z | tZ )
+        doesCommandExist compress
+        tar -cZf "${3}.tar.Z" "${3}"
+        echo -e "${GREEN}Compressed with compress, created ${3}.tar.Z.${NC}" ;;
+      zstd | zst | tar.zst | tzst )
+        doesCommandExist zstd
+        tar -cf "${3}.tar.zst" --zstd "${3}"
+        echo -e "${GREEN}Compressed with zstd, created ${3}.tar.zst.${NC}" ;;
+      7z | tar.7z | t7z )
+        doesCommandExist 7z
+        tar -c "${3}" | 7z a -si "${3}.tar.7z"
+        echo -e "${GREEN}Compressed with 7-Zip, created ${3}.tar.7z.${NC}" ;;
+      rar | tar.rar | trar )
+        doesCommandExist rar
+        tar -c "${3}" | rar a -si"${3}.tar.rar" "${3}.tar.rar"
+        echo -e "${GREEN}Compressed with Rar, created ${3}.tar.rar.${NC}" ;;
+      par2 | parchive )
+        doesCommandExist par2
+        redundancy=32
+        par2 c -r"${redundancy}" -n1 "${3}"
+        echo -e "${GREEN}Archived with Parchive (${redundancy}% redundancy), created ${3}.par2 (and others).${NC}" ;;
+      * )
+        echo -e "${RED}Unknown archive format: ${2}${NC}" && exit 3 ;;
+    esac ;;
+  decompress | extract | e | x)
+    case "${2}" in
+      tar )
+        tar -xf "${3}"
+        echo -e "${GREEN}Extracted with tar.${NC}" ;;
+      bzip2 | j | bz2 | tar.bz2 | tbz2 )
+        doesCommandExist bzip2
+        tar -xjf "${3}"
+        echo -e "${GREEN}Extracted with bzip2.${NC}" ;;
+      xz | lzma | J | tar.xz | txz )
+        doesCommandExist lzma
+        tar -xJf "${3}"
+        echo -e "${GREEN}Extracted with lzma.${NC}" ;;
+      lzip | lz | tar.lz | tlz )
+        doesCommandExist lzip
+        tar -xf "${3}" --lzip
+        echo -e "${GREEN}Extracted with lzip.${NC}" ;;
+      lzop | lzo | tar.lzo | tzo )
+        doesCommandExist lzop
+        tar -xf "${3}" --lzop
+        echo -e "${GREEN}Extracted with lzop.${NC}" ;;
+      gzip | z | gz | tar.gz | tgz )
+        doesCommandExist gzip
+        tar -xzf "${3}"
+        echo -e "${GREEN}Extracted with gunzip.${NC}" ;;
+      compress | Z | tar.Z | tZ )
+        doesCommandExist compress
+        tar -xZf "${3}"
+        echo -e "${GREEN}Extracted with compress.${NC}" ;;
+      zstd | zst | tar.zst | tzst )
+        doesCommandExist zstd
+        tar -xf "${3}" --zstd
+        echo -e "${GREEN}Extracted with zstd.${NC}" ;;
+      7z | tar.7z | t7z )
+        doesCommandExist 7z
+        7z x -so "${3}" | tar -x
+        echo -e "${GREEN}Extracted with 7-Zip.${NC}" ;;
+      rar | tar.rar | trar )
+        doesCommandExist rar
+        rar p "${3}" | tar -x
+        echo -e "${GREEN}Extracted with Rar.${NC}" ;;
+      par2 | parchive )
+        doesCommandExist par2
+        par2 r "${3}"
+        echo -e "${GREEN}Repaired with Parchive.${NC}" ;;
+      * )
+        echo -e "${RED}Unknown archive format: ${2}${NC}" && exit 3 ;;
+    esac ;;
+  * )
+    echo -e "${RED}Unknown command: ${1}${NC}" && exit 2 ;;
+esac

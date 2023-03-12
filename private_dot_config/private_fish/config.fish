@@ -13,9 +13,8 @@ if string match -e 'kitty' $TERM; alias ssh 'kitty +kitten ssh'; end
 set -x SSH_AUTH_SOCK $XDG_RUNTIME_DIR/ssh-agent.socket
 set -x GPG_TTY $(tty)
 
-# PNPM Support
-set -gx PNPM_HOME "$XDG_DATA_HOME/pnpm"
-set -gx PATH "$PNPM_HOME" $PATH
+# User bin support.
+set -gx PATH "$HOME/.local/bin" $PATH
 
 # Custom aliases.
 # alias cat 'bat'; alias find 'fd'; alias grep 'rg'; alias ps 'procs'

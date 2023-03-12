@@ -1,0 +1,49 @@
+#!/usr/bin/env sh
+# -*- coding: utf-8 -*-
+# shellcheck disable=2001,3003,3037,3040
+
+set -euo pipefail
+
+# Version 2023/03/12 - Changelog: https://gist.github.com/Aceheliflyer/425d07d5e651b479069d0d56e4b5fa60
+# This script provides a wrapper to batch protect your files with PAR2 and GPG.
+#
+# Usage: ./batchprotect.sh
+#
+# License:
+#   This shell script is based on the example from
+#   https://wiki.archlinux.org/title/Parchive#Batch-protecting_your_files
+#   which is licensed under the GNU Free Documentation License 1.3 or later
+#   For more information, see https://www.gnu.org/licenses/fdl-1.3.html
+
+# Colors
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+# Internal Field Separator
+OIFS="${IFS}"
+IFS=$'\n'
+
+# Variables
+gpgKey="ACE142C15F53182454DEE0802B45FEC5D0B181E7"
+redundancy=10
+
+list=$(find . -type f | shuf)
+for file in ${list}; do
+  ending="$(echo "${file}" | sed 's/\(.*\)\.\(.*\)$/\2/')" # Extract the file extension from the filename using sed
+
+  # Check if the PAR2 file doesn't already exist, the file isn't a PAR2 or signature file, and the file isn't empty
+  if [ ! -e "${file}-${redundancy}p.par2" ] && [ "${ending}" != "par2" ] && [ "${ending}" != "sig" ] && [ "$(stat --format=%s "${file}")" != 0 ]; then
+    echo -e "${GREEN}Creating archive for ${file}.${NC}"
+    par2 c -qq -n1 -r"${redundancy}" "${file}" > /dev/null 2>&1 | tee /dev/tty
+    rm "${file}.par2"
+    mv "${file}.vol"*"par2" "${file}-${redundancy}p.par2"
+  fi
+
+  # Check if the signature file doesn't already exist and the file isn't a PAR2 or signature file
+  if [ ! -e "${file}.sig" ] && [ "${ending}" != "par2" ] && [ "${ending}" != "sig" ]; then
+    echo -e "${GREEN}Creating signature for ${file}.${NC}"
+    gpg --quiet --default-key "${gpgKey}" --detach-sign --yes "${file}"
+  fi
+done
+
+IFS="${OIFS}"
