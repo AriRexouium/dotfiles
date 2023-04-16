@@ -1,42 +1,30 @@
-# Source ######################################################################
-# https://github.com/Aceheliflyer/config/blob/master/Development/.gitconfig
-
-# Config ######################################################################
 [user]
   name = Jarrett Aiken
   email = jarrett.aiken@achl.fr
   signingkey = ACE142C15F53182454DEE0802B45FEC5D0B181E7
+[core]
+  editor = code --wait
+[diff]
+  tool = vscode
+[difftool "vscode"]
+  cmd = code --wait --diff $LOCAL $REMOTE
+[merge]
+  tool = vscode
+[mergetool "vscode"]
+  cmd = code --wait $MERGED
 [alias]
   authors = shortlog -sne
+  bcommit = commit --allow-empty-message --no-gpg-sign --message ""
+  mclone = git clone --recurse-submodules -j8
+  smpull = submodule update --init --recursive
 [commit]
   gpgSign = true
 [push]
   gpgSign = false
 [tag]
   gpgSign = true
-[status]
-  showUntrackedFiles = all
 [filter "lfs"]
-  required = true
   clean = git-lfs clean -- %f
   smudge = git-lfs smudge -- %f
   process = git-lfs filter-process
-[core]
-  # pager = diff-so-fancy | less --tabs=4 -RFX
-  # pager = diff-so-fancy | most
-[color]
-  ui = true
-[color "diff-highlight"]
-  oldNormal = red bold
-  oldHighlight = red bold 52
-  newNormal = green bold
-  newHighlight = green bold 22
-[color "diff"]
-  meta = yellow
-  frag = magenta bold
-  commit = yellow bold
-  old = red bold
-  new = green bold
-  whitespace = red reverse
-[diff-so-fancy]
-  first-run = false
+  required = true

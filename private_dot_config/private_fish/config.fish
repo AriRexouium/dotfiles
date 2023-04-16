@@ -16,6 +16,12 @@ set -x GPG_TTY $(tty)
 # User bin support.
 set -gx PATH "$HOME/.local/bin" $PATH
 
+# pnpm
+set -gx PNPM_HOME "$XDG_DATA_HOME/pnpm"
+set -gx PATH "$PNPM_HOME" $PATH
+alias pnpx 'pnpm exec'
+[ -f ~/.config/tabtab/fish/__tabtab.fish ]; and . ~/.config/tabtab/fish/__tabtab.fish; or true
+
 # Custom aliases.
 # alias cat 'bat'; alias find 'fd'; alias grep 'rg'; alias ps 'procs'
 alias ls 'exa --classify --icons --git'
