@@ -1,10 +1,9 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 # -*- coding: utf-8 -*-
-# shellcheck disable=3037,3040
 
 set -euo pipefail
 
-# Version 2023/03/12 - Changelog: https://gist.github.com/Aceheliflyer/0712ffed7cb066c4ddf5c221722d9337
+# Version 2023/03/28 - Changelog: https://gist.github.com/Aceheliflyer/0712ffed7cb066c4ddf5c221722d9337
 # This script provides a wrapper to compress and extract files/directories using various algorithms.
 # Supported algorithms include tar, bzip2, lzma, lzip, lzop, gzip, zstd, 7z, rar, and par2.
 #
@@ -27,13 +26,14 @@ set -euo pipefail
 # License:
 #   This script is licensed under the GNU General Public License v3.0 or later.
 #   For more information, see https://www.gnu.org/licenses/gpl-3.0.html
-#   (c) 2023 Jarrett Aiken <jarret.aiken@achl.fr>
+#   Copyright (C) 2023 Jarrett Aiken <jarret.aiken@achl.fr> (https://achl.fr)
 
 # Colors
-GREEN='\033[0;32m'
-RED='\033[0;31m'
-YELLOW='\033[0;33m'
-NC='\033[0m'
+ES="\x1B"
+GREEN="$ES[0;32m"
+RED="$ES[0;31m"
+YELLOW="$ES[0;33m"
+NC="$ES[0m"
 
 # find echo that doesn't have -e
 # ^(?!.*echo\s+.*-e).*echo\s.*
