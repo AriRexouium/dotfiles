@@ -1,0 +1,10 @@
+{
+  "default_server_name": "arirex.me",
+  "disable_custom_urls": true,
+  "room_directory": {
+    "servers": [
+      "achl.fr",
+      "matrix.org"
+    ]
+  }
+}
