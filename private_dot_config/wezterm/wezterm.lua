@@ -6,6 +6,7 @@ return {
     'JetBrainsMono Nerd Font',
     'JetBrains Mono'
   },
+  warn_about_missing_glyphs = false,
   font_size = 12,
   default_cursor_style = 'BlinkingBar',
   cursor_blink_rate = 500,
