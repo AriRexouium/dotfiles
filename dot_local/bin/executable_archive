@@ -3,7 +3,7 @@
 
 set -euo pipefail
 
-# Version 2023/03/28 - Changelog: https://gist.github.com/Aceheliflyer/0712ffed7cb066c4ddf5c221722d9337
+# Version 2024/01/28 - Changelog: https://gist.github.com/AriRexouium/0712ffed7cb066c4ddf5c221722d9337
 # This script provides a wrapper to compress and extract files/directories using various algorithms.
 # Supported algorithms include tar, bzip2, lzma, lzip, lzop, gzip, zstd, 7z, rar, and par2.
 #
