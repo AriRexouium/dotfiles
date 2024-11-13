@@ -1,5 +1,5 @@
 set fish_greeting
-#starship init fish | source
+atuin init fish | source
 set -gx PATH "$HOME/.local/bin" $PATH
 # set -x GPG_TTY $(tty)
 

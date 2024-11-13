@@ -11,6 +11,7 @@ return {
   default_cursor_style = 'BlinkingBar',
   cursor_blink_rate = 500,
   hide_tab_bar_if_only_one_tab = true,
+  hide_mouse_cursor_when_typing = false,
   use_fancy_tab_bar = false,
   tab_bar_at_bottom = true,
   initial_cols = 120,
